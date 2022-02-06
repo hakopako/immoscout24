@@ -1,10 +1,11 @@
-import requests
+import urllib3
 import json
 
 class Slack:
     def __init__(self, url: str, debug=False):
         self.url = url
         self.debug = debug
+        self.http = urllib3.PoolManager()
 
     def error(self, message, text=""):
         if self.debug:
@@ -12,7 +13,7 @@ class Slack:
             return
         print(f"[DEBUG] send message: Error - {message}")
         data = self.template_error(message, text)
-        requests.post(self.url, data = json.dumps(data))
+        res = self.http.request('POST', self.url, headers={'Content-Type': 'application/json'}, body=json.dumps(data))
 
     def info(self, message):
         if self.debug:
@@ -20,14 +21,14 @@ class Slack:
             return
         print(f"[DEBUG] send message: Info - {message}")
         data = self.template_info(message)
-        requests.post(self.url, data = json.dumps(data))
+        res = self.http.request('POST', self.url, headers={'Content-Type': 'application/json'}, body=json.dumps(data))
 
     def send(self, apartment):
         if self.debug:
             print(f"[DEBUG] {vars(apartment)}")
             return 
         data = self.template_send(apartment)
-        requests.post(self.url, data = json.dumps(data))
+        res = self.http.request('POST', self.url, headers={'Content-Type': 'application/json'}, body=json.dumps(data))
 
     def template_send(self, apartment):
         map_address = apartment.address.replace(" ", "+")

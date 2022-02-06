@@ -1,7 +1,7 @@
 import os
-from dotenv import load_dotenv
 
 if "APP_ENV" not in os.environ or os.environ["APP_ENV"] != "prod":
+    from dotenv import load_dotenv
     load_dotenv("../.env")
     print("[DEBUG] load dotenv")
 

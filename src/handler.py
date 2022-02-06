@@ -6,7 +6,7 @@ import slack
 import boto3
 
 
-def main():
+def main(event, context):
     slack_client = slack.Slack(
         url=config.SLACK_URL,
         debug=config.SLACK_DEBUG
@@ -22,7 +22,7 @@ def main():
         bucket=config.AWS_S3_BUCKET_NAME
     )
 
-    publishedafter = (datetime.datetime.now() - datetime.timedelta(hours=12)).isoformat(timespec="seconds") # "2022-02-03T13:21:54"
+    publishedafter = (datetime.datetime.now() - datetime.timedelta(hours=8)).isoformat(timespec="seconds") # "2022-02-03T13:21:54"
     params = "searchType=region&geocodes=/de/berlin/berlin/mitte/mitte,/de/berlin/berlin/mitte/wedding,/de/berlin/berlin/mitte/gesundbrunnen,/de/berlin/berlin/friedrichshain-kreuzberg/kreuzberg,/de/berlin/berlin/tempelhof-schoeneberg/tempelhof,/de/berlin/berlin/pankow/prenzlauer-berg,/de/berlin/berlin/mitte/tiergarten,/de/berlin/berlin/tempelhof-schoeneberg/schoeneberg,/de/berlin/berlin/treptow-koepenick/alt-treptow,/de/berlin/berlin/friedrichshain-kreuzberg/friedrichshain&price=-1100&priceType=calculatedtotalrent&numberofrooms=2-&livingspace=50-&exclusioncriteria=swapflat&haspromotion=false&pagenumber=1&pagesize=20&sorting=-firstactivation&realestatetype=apartmentrent&channel=is24&publishedafter=" + publishedafter + "&features=adKeysAndStringValues,virtualTour,contactDetails,viareporting,nextgen,calculatedTotalRent,listingsInListFirstSummary,grouping,projectsInAllRealestateTypes"
 
     try:
@@ -38,5 +38,3 @@ def main():
                 slack_client.send(item)
     except Exception as e:
         slack_client.error(str(e))
-
-main()

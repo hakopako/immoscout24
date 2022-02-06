@@ -1,4 +1,4 @@
-import requests
+import urllib3
 import json
 import datetime
 
@@ -9,6 +9,7 @@ class Client:
     def __init__(self, s3_session, bucket: str):
         self.s3_session = s3_session
         self.bucket = bucket
+        self.http = urllib3.PoolManager()
 
     def generate_token(self) -> str:
         endpoint = "https://publicauth.immobilienscout24.de/oauth/token"
@@ -22,13 +23,9 @@ class Client:
             "Content-Type":"application/x-www-form-urlencoded; charset=utf-8",
             "Content-Length":"109"
         }
-        request_body = {
-            "grant_type": "client_credentials",
-            "client_id": "ImmobilienScout24-iPhone-Wohnen-AppKey",
-            "client_secret": "pMxNytaNhHPujeeK"
-        }
-        response = requests.post(endpoint, headers=request_headers, data=request_body, timeout=5)
-        return response.json()["access_token"]
+        request_body = "grant_type=client_credentials&client_id=ImmobilienScout24-iPhone-Wohnen-AppKey&client_secret=pMxNytaNhHPujeeK"
+        response = self.http.request("POST", endpoint, headers=request_headers, body=request_body, timeout=5)
+        return json.loads(response.data.decode('utf-8'))["access_token"]
 
     def get_search_result(self, token: str, params: str) -> (Exception, list):
         endpoint = "https://api.mobile.immobilienscout24.de/search?" + params
@@ -42,14 +39,14 @@ class Client:
             "Accept-Language":"en",
             "Host": "api.mobile.immobilienscout24.de"
         }
-        response = requests.get(endpoint, headers=request_headers, timeout=5)
-        data = response.json()
+        response = self.http.request("GET", endpoint, headers=request_headers, timeout=5)
+        data = json.loads(response.data.decode('utf-8'))
         if "error" in data:
             if data["error"] in ["invalid_token", "oauthToken mandatory"] :
                 return (TokenExpiredException(data["error"]), [])
             else:
                 return (Exception(data["error"]), [])
-        return (None, response.json()["results"])
+        return (None, data["results"])
 
     def search(self, params: str) -> list:
         retry = 0
