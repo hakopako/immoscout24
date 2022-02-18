@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "d7b26bf8-6ed0-448c-9b57-4230e007c079",
+		"name": "immobilienscout24",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://publicauth.immobilienscout24.de/oauth/token",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"host": true,
+					"content-length": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "ImmoScout_23.10_15.2.1_._",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-GB,en;q=0.9",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "publicauth.immobilienscout24.de",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "109",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "ImmobilienScout24-iPhone-Wohnen-AppKey",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "pMxNytaNhHPujeeK",
+							"type": "text"
+						}
+					]
+				},
+				"url": "https://publicauth.immobilienscout24.de/oauth/token"
+			},
+			"response": []
+		},
+		{
+			"name": "https://api.mobile.immobilienscout24.de/search?searchType=region&geocodes=/de/berlin/berlin/mitte/mitte,/de/berlin/berlin/mitte/wedding,/de/berlin/berlin/mitte/gesundbrunnen,/de/berlin/berlin/friedrichshain-kreuzberg/kreuzberg,/de/berlin/berlin/tempelhof-schoeneberg/tempelhof,/de/berlin/berlin/pankow/prenzlauer-berg,/de/berlin/berlin/mitte/tiergarten,/de/berlin/berlin/tempelhof-schoeneberg/schoeneberg,/de/berlin/berlin/treptow-koepenick/alt-treptow,/de/berlin/berlin/friedrichshain-kreuzberg/friedrichshain&price=-1100&priceType=calculatedtotalrent&numberofrooms=2-&livingspace=50-&exclusioncriteria=swapflat&haspromotion=false&pagenumber=1&pagesize=20&sorting=standard&realestatetype=apartmentrent&channel=is24&publishedafter=2022-02-03T13:21:54&features=adKeysAndStringValues,virtualTour,contactDetails,viareporting,nextgen,calculatedTotalRent,listingsInListFirstSummary,grouping,projectsInAllRealestateTypes",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"user-agent": true,
+					"host": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InByb18yMDIxLTEyLTE1VDEzOjQ2OjI0LjAyMTgzMVoifQ.eyJzY29wZSI6WyJST0xFX1VTRVIiLCJTXzNMT0FVVEhfQVVUT19DT05GSVJNQVRJT04iLCJTX0FDQ0VTU19NT0RJU19BUElfUFJJQ0VfSElTVE9SWSIsIlNfRVhQT1NFIiwiU19HSVNfR0VPQ09ERSIsIlNfR0lTX0dFT0hJRVJBUkNIWSIsIlNfR0lTX0dFT19BVVRPQ09NUExFVEUiLCJTX0dJU19SRVZFUlNFX0dFT0NPREUiLCJTX0tBVUZQTEFORVIiLCJTX0xPR0lOX0FTX1VTRVIiLCJTX1JFQUxfRVNUQVRFX1JFQUQiLCJTX1JFQUxfRVNUQVRFX1dSSVRFIiwiU19SRVBPUlRJTkdfRU5BQkxFRCIsIlNfUkVUUklFVkVfQ09OVEFDVF9ERVRBSUxTX1BIT05FIiwiU19SRVRSSUVWRV9VTlBVQkxJU0hFRF9FWFBPU0UiLCJTX1NFQVJDSF9JUzI0IiwiU19TRUFSQ0hfVU5MSU1JVEVEX1BBR0VfU0laRSIsIlZBTFVBVElPTl9QREZfUkVBRCIsIlZBTFVBVElPTl9QREZfV1JJVEUiLCJjb25zdW1lckVudGl0bGVtZW50Lm15LnJlYWQiLCJjb252ZXJzYXRpb24udXNlci5hbGwiLCJtb2JpbGUuc29sdmVuY3kucmVhZCIsIm1vYmlsZS5zb2x2ZW5jeS53cml0ZSIsIm9jYS5vZmZlcnMucmVhZCIsIm9jYS5wcmljZXJhbmdlLnJlYWQiLCJwZGV2Lm1hcGkucHJvamVjdC5yZWFkIiwicHJpY2VoaXN0b3J5LnJlYWQiLCJwcm9maWxlLmFwaS5yZWFkIiwicHJvZmlsZS5hcGkud3JpdGUiLCJwcm9qZWN0ZXhwb3NlLm1hcGkubWFpbCIsInByb2plY3RleHBvc2UubWFwaS5yZWFkIiwicHJvamVjdGV4cG9zZS5tYXBpLnJlcG9ydCIsInByb3NwZWN0b3IuYXBpIiwicHVibGlzaGVkcHJvZmlsZS5yZWFkIiwicmVjb21tZW5kZWQuZXhwb3Nlcy5hcGkiLCJyZWxvY2F0aW9ucmVxdWVzdCIsInNvbHZlbmN5LmFwaSIsInN1YnNjcmlwdGlvbi5hcGkucmVhZCIsInN1YnNjcmlwdGlvbi5hcGkud3JpdGUiLCJzdXJ2ZXkuYXBpLnJlYWQiLCJzdXJ2ZXkuYXBpLndyaXRlIl0sImtpZCI6InByb18yMDIxLTEyLTE1VDEzOjQ2OjI0LjAyMTgzMVoiLCJleHAiOjE2NDQwOTQ5NDYsImp0aSI6IjVkYTlmMGZhLTkyZDgtNGQ5MC04ZjFiLWJkYjgyNTdiNjFkNyIsImNsaWVudF9pZCI6IkltbW9iaWxpZW5TY291dDI0LWlQaG9uZS1Xb2huZW4tQXBwS2V5In0.S2m8ShP3W3F3uIXILo5ts0BWEu9jzxnqEYFKd8UVhn6V13VEPVVHekysi5Bbp1UBBEIJEeQ2vkVDfqCkugE0DrBmHfxre1blAW1YcyzEQWoXRjbGBeKuKU34oj8efg5FQ2kPuBvGoM1kNp4c0KdibijhRumOIBrYc42hZ4z_NFZQR4w6TH9W_cMv_kjQCF5uTM2bU0VBao1HCqO4NLeRqNDn4aukXkdJ5lG4UJyexklAa5QTO7xfCbcO9IeVx-NeUh_TTQ8NYgH3T2Z757SPiiBwB_OG0dmU9A0pCI_uc9QjdKOYX3Ht1l8UXAozwSugiAwvY71b_arQf42hrCQJ7g"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-is24-device",
+						"value": "iphone",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "ImmoScout_23.10_15.2.1_._",
+						"type": "text"
+					},
+					{
+						"key": "Host",
+						"value": "api.mobile.immobilienscout24.de",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.mobile.immobilienscout24.de/search?searchType=region&geocodes=/de/berlin/berlin/mitte/mitte,/de/berlin/berlin/mitte/wedding,/de/berlin/berlin/mitte/gesundbrunnen,/de/berlin/berlin/friedrichshain-kreuzberg/kreuzberg,/de/berlin/berlin/tempelhof-schoeneberg/tempelhof,/de/berlin/berlin/pankow/prenzlauer-berg,/de/berlin/berlin/mitte/tiergarten,/de/berlin/berlin/tempelhof-schoeneberg/schoeneberg,/de/berlin/berlin/treptow-koepenick/alt-treptow,/de/berlin/berlin/friedrichshain-kreuzberg/friedrichshain&price=-1100&priceType=calculatedtotalrent&numberofrooms=2-&livingspace=50-&exclusioncriteria=swapflat&haspromotion=false&pagenumber=1&pagesize=20&sorting=-firstactivation&realestatetype=apartmentrent&channel=is24&publishedafter=2022-02-03T13:21:54&features=adKeysAndStringValues,virtualTour,contactDetails,viareporting,nextgen,calculatedTotalRent,listingsInListFirstSummary,grouping,projectsInAllRealestateTypes",
+					"protocol": "https",
+					"host": [
+						"api",
+						"mobile",
+						"immobilienscout24",
+						"de"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "searchType",
+							"value": "region"
+						},
+						{
+							"key": "geocodes",
+							"value": "/de/berlin/berlin/mitte/mitte,/de/berlin/berlin/mitte/wedding,/de/berlin/berlin/mitte/gesundbrunnen,/de/berlin/berlin/friedrichshain-kreuzberg/kreuzberg,/de/berlin/berlin/tempelhof-schoeneberg/tempelhof,/de/berlin/berlin/pankow/prenzlauer-berg,/de/berlin/berlin/mitte/tiergarten,/de/berlin/berlin/tempelhof-schoeneberg/schoeneberg,/de/berlin/berlin/treptow-koepenick/alt-treptow,/de/berlin/berlin/friedrichshain-kreuzberg/friedrichshain"
+						},
+						{
+							"key": "price",
+							"value": "-1100"
+						},
+						{
+							"key": "priceType",
+							"value": "calculatedtotalrent"
+						},
+						{
+							"key": "numberofrooms",
+							"value": "2-"
+						},
+						{
+							"key": "livingspace",
+							"value": "50-"
+						},
+						{
+							"key": "exclusioncriteria",
+							"value": "swapflat"
+						},
+						{
+							"key": "haspromotion",
+							"value": "false"
+						},
+						{
+							"key": "pagenumber",
+							"value": "1"
+						},
+						{
+							"key": "pagesize",
+							"value": "20"
+						},
+						{
+							"key": "sorting",
+							"value": "-firstactivation"
+						},
+						{
+							"key": "realestatetype",
+							"value": "apartmentrent"
+						},
+						{
+							"key": "channel",
+							"value": "is24"
+						},
+						{
+							"key": "publishedafter",
+							"value": "2022-02-03T13:21:54"
+						},
+						{
+							"key": "features",
+							"value": "adKeysAndStringValues,virtualTour,contactDetails,viareporting,nextgen,calculatedTotalRent,listingsInListFirstSummary,grouping,projectsInAllRealestateTypes"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

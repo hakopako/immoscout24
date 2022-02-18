@@ -25,7 +25,13 @@ $ make download-lib
  ----> this will download library to ./src/*
 ```
 
-# build src
+# Build src
 
 - `$ make zip-src` will create a zip file in `./dist` to upload AWS Lambda.
 
+# Postman
+
+[Postman](https://www.postman.com/) is an easy way to try out API request.  
+Here is the API collection which this tool is using.  
+
+[./immobilienscout24.postman_collection.json](./immobilienscout24.postman_collection.json)
