@@ -50,7 +50,7 @@ class Client:
 
     def search(self, params: str) -> list:
         retry = 0
-        while retry < 1:
+        while retry < 2:
             response = self.s3_session.get_object(Bucket=self.bucket, Key="api-token.txt")
             immoscout24_token = response["Body"].read().decode('utf-8')
             (err, result) = self.get_search_result(token=immoscout24_token, params=params)
