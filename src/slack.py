@@ -33,6 +33,7 @@ class Slack:
     def template_send(self, apartment):
         map_address = apartment.address.replace(" ", "+")
         return {
+    "text": f"Warm {apartment.price} | {apartment.space} | {apartment.room} | {apartment.address}",
 	"blocks": [
 		{
 			"type": "section",
