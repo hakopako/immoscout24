@@ -1,9 +1,9 @@
 import unittest
 import boto3
 import config
-import apartment
+import property_class
 
-class ApartmentTest(unittest.TestCase):
+class PropertyTest(unittest.TestCase):
 
     s3_session = boto3.client(
         service_name='s3',
@@ -12,7 +12,7 @@ class ApartmentTest(unittest.TestCase):
         region_name=config.AWS_REGION
     )
 
-    def __apartment_data(self):
+    def __property_data(self):
         return {
             "reportUrl": "https://angebot-melden.immobilienscout24.de/report?realEstateId=34008641&publicationState=live",
             "id": "34008641",
@@ -54,17 +54,17 @@ class ApartmentTest(unittest.TestCase):
         }
 
     def test_load_from_api(self):
-        item = apartment.new("dummy", "dummy")
-        item.load_from_api(self.__apartment_data())
+        item = property_class.new("dummy", "dummy", "dummy")
+        item.load_from_api(self.__property_data())
         print(vars(item))
-        self.assertTrue(item.apartment_id == 34008641)
+        self.assertTrue(item.property_id == 34008641)
 
     def test_scenario(self):
-        item = apartment.new(ApartmentTest.s3_session, config.AWS_S3_BUCKET_NAME)
-        item.load_from_api(self.__apartment_data())
+        item = property_class.new(ApartmentTest.s3_session, config.AWS_S3_BUCKET_NAME)
+        item.load_from_api(self.__property_data())
 
-        ApartmentTest.s3_session.delete_object(Bucket=config.AWS_S3_BUCKET_NAME, Key=f"apartment/{item.apartment_id}")
+        ApartmentTest.s3_session.delete_object(Bucket=config.AWS_S3_BUCKET_NAME, Key=f"{item.property_type}/{item.property_id}")
         self.assertFalse(item.is_exist())
         self.assertTrue(item.insert())
         self.assertTrue(item.is_exist())
-        ApartmentTest.s3_session.delete_object(Bucket=config.AWS_S3_BUCKET_NAME, Key=f"apartment/{item.apartment_id}")
+        ApartmentTest.s3_session.delete_object(Bucket=config.AWS_S3_BUCKET_NAME, Key=f"{item.property_type}/{item.property_id}")

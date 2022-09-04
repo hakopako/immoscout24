@@ -1,6 +1,6 @@
 import datetime
 import config
-import apartment
+import property_class
 import immoscout24api
 import slack
 import boto3
@@ -24,13 +24,15 @@ def main(event, context):
 
     publishedafter = (datetime.datetime.now() - datetime.timedelta(hours=8)).isoformat(timespec="seconds") # "2022-02-03T13:21:54"
     params = "searchType=region&geocodes=/de/berlin/berlin/mitte/mitte,/de/berlin/berlin/mitte/gesundbrunnen,/de/berlin/berlin/friedrichshain-kreuzberg/kreuzberg,/de/berlin/berlin/tempelhof-schoeneberg/tempelhof,/de/berlin/berlin/pankow/prenzlauer-berg,/de/berlin/berlin/mitte/tiergarten,/de/berlin/berlin/tempelhof-schoeneberg/schoeneberg,/de/berlin/berlin/treptow-koepenick/alt-treptow,/de/berlin/berlin/friedrichshain-kreuzberg/friedrichshain,/de/berlin/berlin/neukoelln/neukoelln&price=-1100&priceType=calculatedtotalrent&numberofrooms=2-&livingspace=50-&exclusioncriteria=swapflat&haspromotion=false&pagenumber=1&pagesize=20&sorting=-firstactivation&realestatetype=apartmentrent&channel=is24&publishedafter=" + publishedafter + "&features=adKeysAndStringValues,virtualTour,contactDetails,viareporting,nextgen,calculatedTotalRent,listingsInListFirstSummary,grouping,projectsInAllRealestateTypes"
+    property_type = "apartment"
 
     try:
-        apartments = immoscout24_client.search(params)
-        for data in apartments:
-            item = apartment.new(
+        properties = immoscout24_client.search(params)
+        for data in properties:
+            item = property_class.new(
                 s3_session=s3_session,
                 bucket=config.AWS_S3_BUCKET_NAME
+                property_type=property_type
             )
             item.load_from_api(data)
             if not item.is_exist():
