@@ -1,14 +1,15 @@
 
-def new(s3_session, bucket):
-    return Apartment(s3_session=s3_session, bucket=bucket)
+def new(s3_session, bucket, property_type):
+    return Property(s3_session=s3_session, bucket=bucket, property_type=property_type)
 
-class Apartment:
+class Property:
 
-    def __init__(self, s3_session=None, bucket=None):
+    def __init__(self, s3_session=None, bucket=None, property_type=None):
         self.s3_session = s3_session
         self.bucket = bucket
+        self.property_type = property_type
 
-        self.apartment_id = -1
+        self.property_id = -1
         self.title = ""
         self.photo = ""
         self.address = ""
@@ -19,7 +20,7 @@ class Apartment:
         self.room = ""
 
     def load_from_api(self, data: dict):
-        self.apartment_id = int(data["id"])
+        self.property_id = int(data["id"])
         self.title = data["title"]
         if len(data["pictures"]) > 0:
             url = data["pictures"][0]["urlScaleAndCrop"]
@@ -35,7 +36,7 @@ class Apartment:
         if self.s3_session is None:
             raise Error("session is not set")
         try:
-            self.s3_session.head_object(Bucket=self.bucket, Key=f"apartment/{self.apartment_id}")
+            self.s3_session.head_object(Bucket=self.bucket, Key=f"{self.property_type}/{self.property_id}")
             return True
         except Exception:
             return False
@@ -43,5 +44,5 @@ class Apartment:
     def insert(self) -> bool:
         if self.s3_session is None:
             raise Error("session is not set")
-        self.s3_session.put_object(Bucket=self.bucket, Key=f"apartment/{self.apartment_id}", Body="")
+        self.s3_session.put_object(Bucket=self.bucket, Key=f"{self.property_type}/{self.property_id}", Body="")
         return True
